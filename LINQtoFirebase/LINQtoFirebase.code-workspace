@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "ApplicationCore",
+			"name": "ApplicationCore"
+		},
+		{
+			"path": "Infrastructure",
+			"name": "Infrastructure"
+		},
+		{
+			"path": "Models",
+			"name": "Models"
+		},
+		{
+			"path": "Services",
+			"name": "Services"
+		},
+		{
+			"path": "Utilities",
+			"name": "Utilities"
+		}
+	],
+	"settings": {}
+}

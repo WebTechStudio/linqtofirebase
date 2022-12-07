@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="2.2.0" />
+    <PackageReference Include="Google.Api.Gax" Version="3.2.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FirebaseAdmin">
+      <HintPath>bin\Debug\net5.0\\FirebaseAdmin.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>bin\Debug\net5.0\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>bin\Debug\net5.0\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>bin\Debug\net5.0\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Gax">
+      <HintPath>bin\Debug\net5.0\Google.Apis.Gax.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
