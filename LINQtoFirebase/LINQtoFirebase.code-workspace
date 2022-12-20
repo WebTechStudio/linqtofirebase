@@ -19,6 +19,9 @@
 		{
 			"path": "Utilities",
 			"name": "Utilities"
+		},
+		{
+			"path": "../../WebTech.Test"
 		}
 	],
 	"settings": {}
