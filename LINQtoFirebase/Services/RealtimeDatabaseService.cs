@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using WebTech.L2F.Infrastructure;
@@ -27,9 +29,14 @@ namespace WebTech.L2F.Services
 
             try
             {
-                var response = _httpClient.GetAsync(apiEndpoint).Result.Content.ReadAsStringAsync();
+                var response = _httpClient.GetAsync(apiEndpoint).Result;
+
+                if (Equals(response.StatusCode, HttpStatusCode.Unauthorized))
+                    throw new UnauthorizedAccessException(response.ReasonPhrase);
+
+                var firebaseData = response.Content.ReadAsStringAsync();
                 
-                data = JsonSerializer.Deserialize<IRealtimeDatabaseRecord>(response.Result);
+                var test = JsonSerializer.Deserialize<IRealtimeDatabaseRecord>(firebaseData.Result);
 
                 return data;
             }

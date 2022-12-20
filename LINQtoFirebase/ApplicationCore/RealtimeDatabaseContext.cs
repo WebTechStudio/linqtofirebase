@@ -7,6 +7,7 @@ using Google.Apis.Util;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using WebTech.L2F.Infrastructure;
 using WebTech.L2F.Services;
@@ -16,7 +17,7 @@ namespace WebTech.L2F.AppCore
 {
     public class RealtimeDatabaseContext : IFirebaseContext
     {
-        private string _projectId, _customToken, _apiKey;
+        private string _projectId, _customToken, _apiKey, _identityPlatformToken;
         private RealtimeDatabaseService _realtimeDBService = new RealtimeDatabaseService();
 
         public RealtimeDatabaseContext(string serviceAccountJSON, string apiKey)
@@ -29,7 +30,7 @@ namespace WebTech.L2F.AppCore
             });
         }
 
-        public IRealtimeDatabaseRecord Retrieve(string jsonPath) => _realtimeDBService.Retrieve(this._projectId, _customToken, jsonPath);
+        public IRealtimeDatabaseRecord Retrieve(string jsonPath) => _realtimeDBService.Retrieve(this._projectId, _identityPlatformToken, jsonPath);
 
         public async void SignInUser(string uid)
         {
@@ -46,15 +47,22 @@ namespace WebTech.L2F.AppCore
                     Method = HttpConsts.Post,
                     BaseUri = new Uri("https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken")
                 };
-                var httpRequest = new HttpRequestMessage();
-
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri("https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken");
-                httpRequest.RequestUri = new Uri(httpRequest.RequestUri, $"?key={_apiKey}");
                 
                 reqBuilder.AddParameter(RequestParameterType.Query, "key", _apiKey);
 
                 var request = reqBuilder.CreateRequest();
+                var requestBody = new SignInRequest() {
+                    token = _customToken,
+                    returnSecureToken = true
+                };
+                var response = new SignInResponse();
+                
+                request.Content = JsonContent.Create(requestBody);
+
+                using (var client = new HttpClient())
+                    response = JsonSerializer.Deserialize<SignInResponse>(client.SendAsync(request).Result.Content.ReadAsStringAsync().Result);
+
+                _identityPlatformToken = response.idToken;
             }
 
             catch (FirebaseException ex)

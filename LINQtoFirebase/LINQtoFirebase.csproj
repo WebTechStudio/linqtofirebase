@@ -24,7 +24,7 @@
       <HintPath>bin\Debug\net5.0\Google.Apis.Core.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis.Gax">
-      <HintPath>bin\Debug\net5.0\Google.Apis.Gax.dll</HintPath>
+      <HintPath>bin\Debug\net5.0\Google.Api.Gax.dll</HintPath>
     </Reference>
   </ItemGroup>
 
